@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Diagnostics;
 
-namespace AoSvsSoA
+namespace CodeMetrics
 {
     class Program
     {
-        private static int iterations = 100 + 1;
+        private static int iterations = 10000;
 
         struct Entity
         {
@@ -36,7 +40,7 @@ namespace AoSvsSoA
             Console.WriteLine($"AoS test time elapsed in milliseconds: {aosStopwatch.ElapsedMilliseconds}");
 
             Console.ReadKey();
-            
+
             Stopwatch soaStopwatch = new Stopwatch();
             soaStopwatch.Start();
             Console.WriteLine("SoA Test");
@@ -46,8 +50,7 @@ namespace AoSvsSoA
 
             soaStopwatch.Stop();
             Console.WriteLine($"SoA test time elapsed in milliseconds: {soaStopwatch.ElapsedMilliseconds}");
-            Console.WriteLine("SoA was: " + (aosStopwatch.ElapsedMilliseconds / soaStopwatch.ElapsedMilliseconds) + " times faster");
-
+            Console.WriteLine("SoA was: " + aosStopwatch.ElapsedMilliseconds / soaStopwatch.ElapsedMilliseconds + " times faster");
             Console.ReadKey();
         }
 
@@ -57,12 +60,11 @@ namespace AoSvsSoA
 
             for (int i = 0; i < iterations; i++)
             {
-                enArr[i].h = new Random().Next(0, 1000);
-                enArr[i].w = new Random().Next(0, 1000);
-                enArr[i].d = new Random().Next(0, 1000);
+                enArr[i].h = new Random().NextDouble();
+                enArr[i].w = new Random().NextDouble();
+                enArr[i].d = new Random().NextDouble();
 
-                enArr[i].sum = Math.Sqrt(enArr[i].h) 
-                    + Math.Sqrt(enArr[i].w) + Math.Sqrt(enArr[i].d);
+                enArr[i].sum = Math.Sqrt(enArr[i].h) + Math.Sqrt(enArr[i].w) + Math.Sqrt(enArr[i].d);
 
                 Console.WriteLine($"AoS Sqr[{i}]: {enArr[i].sum}");
             }
@@ -78,12 +80,11 @@ namespace AoSvsSoA
 
             for (int i = 0; i < iterations; i++)
             {
-                entities.h[i] = new Random().Next(0, 1000);
-                entities.w[i] = new Random().Next(0, 1000);
-                entities.d[i] = new Random().Next(0, 1000);
+                entities.h[i] = new Random().NextDouble();
+                entities.w[i] = new Random().NextDouble();
+                entities.d[i] = new Random().NextDouble();
 
-                entities.sum[i] = Math.Sqrt(entities.h[i]) 
-                    + Math.Sqrt(entities.w[i]) + Math.Sqrt(entities.d[i]);
+                entities.sum[i] = Math.Sqrt(entities.h[i]) + Math.Sqrt(entities.w[i]) + Math.Sqrt(entities.d[i]);
                 Console.WriteLine($"SoA Sqr[{i}]: {entities.sum[i]}");
             }
         }
