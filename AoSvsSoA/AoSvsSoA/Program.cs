@@ -9,11 +9,8 @@ namespace AoSvsSoA
 
         private static Random random = new Random();
 
-        public struct Entity
+        public class Entity
         {
-            public double a;
-            public double b;
-            public double c;
             public double h;
             public double w;
             public double d;
@@ -22,9 +19,6 @@ namespace AoSvsSoA
 
         public struct Entities
         {
-            public double[] a;
-            public double[] b;
-            public double[] c;
             public double[] h;
             public double[] w;
             public double[] d;
@@ -33,6 +27,7 @@ namespace AoSvsSoA
 
         static void Main(string[] args)
         {
+            GC.TryStartNoGCRegion(40000000);
             Entities entities = new Entities();
             entities.h = new double[iterations];
             entities.w = new double[iterations];
@@ -40,6 +35,12 @@ namespace AoSvsSoA
             entities.sum = new double[iterations];
 
             Entity[] enArr = new Entity[iterations];
+
+            for (int i = 0; i < iterations; i++)
+            {
+                enArr.SetValue(new Entity(), i);
+            }
+            
 
             AoSTest(10000, enArr);
 
@@ -71,8 +72,8 @@ namespace AoSvsSoA
             {
                 Console.WriteLine("SoA was: " + (aosStopwatch.ElapsedMilliseconds / soaStopwatch.ElapsedMilliseconds) + " times faster");
             }
-            
 
+            GC.EndNoGCRegion();
             Console.ReadKey();
         }
 
@@ -95,12 +96,10 @@ namespace AoSvsSoA
                 enArr[i].h = random.Next(0, 1000);
                 enArr[i].w = random.Next(0, 1000);
 
-                Console.WriteLine(enArr[i].h + enArr[i].w);
+                enArr[i].sum = Math.Sqrt(enArr[i].h)
+                    + Math.Sqrt(enArr[i].w);
 
-                //enArr[i].sum = Math.Sqrt(enArr[i].h)
-                //    + Math.Sqrt(enArr[i].w);
-
-                //Console.WriteLine($"AoS Sqr[{i}]: {enArr[i].sum}");
+                Console.WriteLine($"AoS Sqr[{i}]: {enArr[i].sum}");
             }
         }
 
@@ -122,11 +121,9 @@ namespace AoSvsSoA
                 entities.h[i] = random.Next(0, 1000);
                 entities.w[i] = random.Next(0, 1000);
 
-                Console.WriteLine(entities.h[i] + entities.w[i]);
-
-                //entities.sum[i] = Math.Sqrt(entities.h[i])
-                //    + Math.Sqrt(entities.w[i]);
-                //Console.WriteLine($"SoA Sqr[{i}]: {entities.sum[i]}");
+                entities.sum[i] = Math.Sqrt(entities.h[i])
+                    + Math.Sqrt(entities.w[i]);
+                Console.WriteLine($"SoA Sqr[{i}]: {entities.sum[i]}");
             }
         }
     }
