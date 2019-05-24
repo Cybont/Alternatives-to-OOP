@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Diagnostics;
-
+using System.Threading;
+using System.Threading.Tasks;
+using System.Drawing;
 namespace AoSvsSoA
 {
     class Program
     {
-        private static int iterations = 10000 + 1;
+        private static int iterations = 500000 + 1;
 
         private static Random random = new Random();
 
@@ -27,7 +29,6 @@ namespace AoSvsSoA
 
         static void Main(string[] args)
         {
-            GC.TryStartNoGCRegion(40000000);
             Entities entities = new Entities();
             entities.h = new double[iterations];
             entities.w = new double[iterations];
@@ -52,29 +53,28 @@ namespace AoSvsSoA
             Console.WriteLine("");
 
             AoSTest(iterations, enArr);
-            
+
             aosStopwatch.Stop();
             Console.WriteLine($"AoS test time elapsed in milliseconds: {aosStopwatch.ElapsedMilliseconds}");
 
             Console.ReadKey();
-            
-            Stopwatch soaStopwatch = new Stopwatch();
-            soaStopwatch.Start();
-            Console.WriteLine("SoA Test");
-            Console.WriteLine("");
 
-            SoATest(iterations, entities);
+            //Stopwatch soaStopwatch = new Stopwatch();
+            //soaStopwatch.Start();
+            //Console.WriteLine("SoA Test");
+            //Console.WriteLine("");
 
-            soaStopwatch.Stop();
-            Console.WriteLine($"SoA test time elapsed in milliseconds: {soaStopwatch.ElapsedMilliseconds}");
+            //SoATest(iterations, entities);
 
-            if (soaStopwatch.ElapsedMilliseconds > aosStopwatch.ElapsedMilliseconds)
-            {
-                Console.WriteLine("SoA was: " + (aosStopwatch.ElapsedMilliseconds / soaStopwatch.ElapsedMilliseconds) + " times faster");
-            }
+            //soaStopwatch.Stop();
+            //Console.WriteLine($"SoA test time elapsed in milliseconds: {soaStopwatch.ElapsedMilliseconds}");
 
-            GC.EndNoGCRegion();
-            Console.ReadKey();
+            ////if (soaStopwatch.ElapsedMilliseconds > aosStopwatch.ElapsedMilliseconds)
+            ////{
+            ////    Console.WriteLine("SoA was: " + (aosStopwatch.ElapsedMilliseconds / soaStopwatch.ElapsedMilliseconds) + " times faster");
+            ////}
+
+            //Console.ReadKey();
         }
 
         public static void AoSTest(int iterations, Entity[] enArr)
@@ -90,6 +90,7 @@ namespace AoSvsSoA
 
             //    Console.WriteLine($"AoS Sqr[{i}]: {enArr[i].sum}");
             //}
+
 
             for (int i = 0; i < iterations; i++)
             {
@@ -115,8 +116,8 @@ namespace AoSvsSoA
             //        + Math.Sqrt(entities.w[i]) + Math.Sqrt(entities.d[i]);
             //    Console.WriteLine($"SoA Sqr[{i}]: {entities.sum[i]}");
             //}
-
-            for (int i = 0; i < iterations; i++)
+            
+            for(int i = 0; i < iterations; i++)
             {
                 entities.h[i] = random.Next(0, 1000);
                 entities.w[i] = random.Next(0, 1000);
