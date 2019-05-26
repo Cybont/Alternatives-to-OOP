@@ -1,5 +1,4 @@
 ﻿// AoSvsSoA.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
 
 #include "pch.h"
 #include <iostream>
@@ -31,6 +30,17 @@ int main()
 
 	Entities* entities = new Entities;
 
+	for (int i = 0; i < iterations; i++)
+	{
+		enArr[i].a = rand() - 50;
+		enArr[i].b = rand() - 50;
+		enArr[i].c = rand() - 50;
+
+		entities->a[i] = rand() - 50;
+		entities->b[i] = rand() - 50;
+		entities->c[i] = rand() - 50;
+	}
+
 	auto start = std::chrono::high_resolution_clock::now();
 
 	AoSTest(iterations, enArr);
@@ -40,16 +50,11 @@ int main()
 	std::chrono::duration<double> elapsed = finish - start;
 
 	std::cout << std::to_string(elapsed.count());
-
-	
 }
 
 void AoSTest(int iterations, Entity enArr[]) {
 	for (int i = 0; i < iterations; i++)
-	{
-		enArr[i].a = rand();
-		enArr[i].b = rand();
-		
+	{		
 		std::cout << std::to_string(sqrt(enArr[i].a) + sqrt(enArr[i].b)) + "\n";
 	}
 }
@@ -57,9 +62,6 @@ void AoSTest(int iterations, Entity enArr[]) {
 void SoATest(int iterations, Entities* entities) {
 	for (int i = 0; i < iterations; i++)
 	{
-		entities->a[i] = rand();
-		entities->b[i] = rand();
-
 		std::cout << std::to_string(sqrt(entities->a[i]) + sqrt(entities->b[i])) + "\n";
 	}
 }
