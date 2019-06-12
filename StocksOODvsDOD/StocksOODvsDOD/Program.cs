@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using RealDODSpace;
 
 namespace StocksOODvsDOD
 {
@@ -10,6 +11,8 @@ namespace StocksOODvsDOD
         static void Main(string[] args)
         {
             int noOfTrades = 1000000;
+
+            //Console.ReadKey();
 
             StockTradeHistoryOOD sthOOD = new StockTradeHistoryOOD(noOfTrades);
             StockTradeHistoryDOD sthDOD = new StockTradeHistoryDOD(noOfTrades);
@@ -38,5 +41,20 @@ namespace StocksOODvsDOD
             }
             Console.WriteLine();
         }
+
+
+
+
+        #region Real DOD
+
+        private static void DOD(int noOfTrades)
+        {
+            StockTradeData stockTradeData = new StockTradeData();
+            StockFunctions F = new StockFunctions();
+            F.StockTradeInit(noOfTrades, stockTradeData);
+           
+        }
+
+        #endregion
     }
 }

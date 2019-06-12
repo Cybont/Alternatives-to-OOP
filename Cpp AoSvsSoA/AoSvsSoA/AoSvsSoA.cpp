@@ -6,9 +6,9 @@
 #include <string>
 #include <math.h>
 
-const int iterations = 100000;
+const int iterations = 40000000;
 
-struct Entity {
+class Entity {
 public:
 	float a, b, c;
 };
@@ -30,15 +30,19 @@ int main()
 
 	Entities* entities = new Entities;
 
+	int A = rand() - 50;
+	int B = rand() - 50;
+	int C = rand() - 50;
+
 	for (int i = 0; i < iterations; i++)
 	{
-		enArr[i].a = rand() - 50;
-		enArr[i].b = rand() - 50;
-		enArr[i].c = rand() - 50;
+		enArr[i].a = A;
+		enArr[i].b = B;
+		enArr[i].c = C;
 
-		entities->a[i] = rand() - 50;
-		entities->b[i] = rand() - 50;
-		entities->c[i] = rand() - 50;
+		entities->a[i] = A;
+		entities->b[i] = B;
+		entities->c[i] = C;
 	}
 
 	auto start = std::chrono::high_resolution_clock::now();
@@ -49,20 +53,25 @@ int main()
 	auto finish = std::chrono::high_resolution_clock::now();
 	std::chrono::duration<double> elapsed = finish - start;
 
-	std::cout << std::to_string(elapsed.count());
+	//std::cout << std::to_string(elapsed.count()) + "time";
+	std::cout << std::to_string(std::chrono::duration_cast<std::chrono::seconds>(finish - start).count()) + "s";
 }
 
 void AoSTest(int iterations, Entity enArr[]) {
 	for (int i = 0; i < iterations; i++)
-	{		
-		std::cout << std::to_string(sqrt(enArr[i].a) + sqrt(enArr[i].b)) + "\n";
+	{	
+		enArr[i].a = sqrt(enArr[i].a * enArr[i].c);
+		enArr[i].c = sqrt(enArr[i].c * enArr[i].a);
+		//std::cout << std::to_string(sqrt(enArr[i].a) + sqrt(enArr[i].b)) + "\n";
 	}
 }
 
 void SoATest(int iterations, Entities* entities) {
 	for (int i = 0; i < iterations; i++)
 	{
-		std::cout << std::to_string(sqrt(entities->a[i]) + sqrt(entities->b[i])) + "\n";
+		entities->a[i] = sqrt(entities->a[i] * entities->c[i]);
+		entities->c[i] = sqrt(entities->c[i] * entities->a[i]);
+		//std::cout << std::to_string(sqrt(entities->a[i]) + sqrt(entities->b[i])) + "\n";
 	}
 }
 

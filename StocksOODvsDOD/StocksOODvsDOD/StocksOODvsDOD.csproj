@@ -52,6 +52,7 @@
     <Compile Include="StockTradeHistoryBase.cs" />
     <Compile Include="StockTradeHistoryDOD.cs" />
     <Compile Include="StockTradeHistoryOOD.cs" />
+    <Compile Include="FullDODStockTrade.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
