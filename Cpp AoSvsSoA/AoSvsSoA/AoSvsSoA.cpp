@@ -5,6 +5,7 @@
 #include <chrono>
 #include <string>
 #include <math.h>
+#include <stdlib.h>
 
 const int iterations = 40000000;
 
@@ -20,12 +21,12 @@ public:
 	float c[iterations];
 };
 
-void AoSTest(int iterations, Entity enArr[]);
+int AoSTest(int iterations, Entity enArr[]);
 
-void SoATest(int iterations, Entities* entities);
+int SoATest(int iterations, Entities* entities);
 
-int main()
-{
+int main() {
+
 	Entity* enArr = new Entity[iterations];
 
 	Entities* entities = new Entities;
@@ -34,8 +35,7 @@ int main()
 	int B = rand() - 50;
 	int C = rand() - 50;
 
-	for (int i = 0; i < iterations; i++)
-	{
+	for (int i = 0; i < iterations; i++) {
 		enArr[i].a = A;
 		enArr[i].b = B;
 		enArr[i].c = C;
@@ -47,32 +47,30 @@ int main()
 
 	auto start = std::chrono::high_resolution_clock::now();
 
-	AoSTest(iterations, enArr);
-	//SoATest(iterations, entities);
+	const auto ret = AoSTest(iterations, enArr);
+	//const auto ret = SoATest(iterations, entities);
 
 	auto finish = std::chrono::high_resolution_clock::now();
 	std::chrono::duration<double> elapsed = finish - start;
 
-	//std::cout << std::to_string(elapsed.count()) + "time";
-	std::cout << std::to_string(std::chrono::duration_cast<std::chrono::seconds>(finish - start).count()) + "s";
+	std::cout << std::to_string(std::chrono::duration_cast<std::chrono::seconds>(finish - start).count()) + "s "
+		<< "ret=" << ret;
 }
 
-void AoSTest(int iterations, Entity enArr[]) {
-	for (int i = 0; i < iterations; i++)
-	{	
+int AoSTest(int iterations, Entity enArr[]) {
+	for (int i = 0; i < iterations; i++) {
 		enArr[i].a = sqrt(enArr[i].a * enArr[i].c);
 		enArr[i].c = sqrt(enArr[i].c * enArr[i].a);
-		//std::cout << std::to_string(sqrt(enArr[i].a) + sqrt(enArr[i].b)) + "\n";
 	}
+	return enArr[iterations - 1].c;
 }
 
-void SoATest(int iterations, Entities* entities) {
-	for (int i = 0; i < iterations; i++)
-	{
+int SoATest(int iterations, Entities* entities) {
+	for (int i = 0; i < iterations; i++) {
 		entities->a[i] = sqrt(entities->a[i] * entities->c[i]);
 		entities->c[i] = sqrt(entities->c[i] * entities->a[i]);
-		//std::cout << std::to_string(sqrt(entities->a[i]) + sqrt(entities->b[i])) + "\n";
 	}
+	return entities->c[iterations - 1];
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
