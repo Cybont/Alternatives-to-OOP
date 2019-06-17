@@ -13,10 +13,8 @@ namespace StocksOODvsDOD
             int noOfTrades = 1000000;
 
             StockTradeHistoryOOD sthOOD = new StockTradeHistoryOOD(noOfTrades);
-            //StockTradeHistoryDOD sthDOD = new StockTradeHistoryDOD(noOfTrades);
 
             MeasureAverageCalc("(Per) Object-Oriented approach", sthOOD);
-            //MeasureAverageCalc("(Per) Data-Oriented approach", sthDOD);
             DOD("(Kimon) Data-Oriented approach", noOfTrades);
 
             Console.ReadKey();

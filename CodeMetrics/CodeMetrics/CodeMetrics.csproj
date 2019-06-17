@@ -43,6 +43,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FullDODStockTrade.cs" />
+    <Compile Include="Per\Company.cs" />
+    <Compile Include="Per\CompanyCatalog.cs" />
+    <Compile Include="Per\IStockTradeHistory.cs" />
+    <Compile Include="Per\StockTrade.cs" />
+    <Compile Include="Per\StockTradeHistoryBase.cs" />
+    <Compile Include="Per\StockTradeHistoryOOD.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
