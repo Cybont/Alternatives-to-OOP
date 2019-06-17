@@ -43,15 +43,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Company.cs" />
-    <Compile Include="CompanyCatalog.cs" />
-    <Compile Include="IStockTradeHistory.cs" />
+    <Compile Include="Per\Company.cs" />
+    <Compile Include="Per\CompanyCatalog.cs" />
+    <Compile Include="Per\IStockTradeHistory.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StockTrade.cs" />
-    <Compile Include="StockTradeHistoryBase.cs" />
-    <Compile Include="StockTradeHistoryDOD.cs" />
-    <Compile Include="StockTradeHistoryOOD.cs" />
+    <Compile Include="Per\StockTrade.cs" />
+    <Compile Include="Per\StockTradeHistoryBase.cs" />
+    <Compile Include="Per\StockTradeHistoryDOD.cs" />
+    <Compile Include="Per\StockTradeHistoryOOD.cs" />
     <Compile Include="FullDODStockTrade.cs" />
   </ItemGroup>
   <ItemGroup>

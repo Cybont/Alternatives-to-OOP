@@ -12,13 +12,12 @@ namespace StocksOODvsDOD
         {
             int noOfTrades = 1000000;
 
-            //Console.ReadKey();
-
             StockTradeHistoryOOD sthOOD = new StockTradeHistoryOOD(noOfTrades);
-            StockTradeHistoryDOD sthDOD = new StockTradeHistoryDOD(noOfTrades);
+            //StockTradeHistoryDOD sthDOD = new StockTradeHistoryDOD(noOfTrades);
 
-            MeasureAverageCalc("Object-Oriented approach", sthOOD);
-            MeasureAverageCalc("Data-Oriented approach", sthDOD);
+            MeasureAverageCalc("(Per) Object-Oriented approach", sthOOD);
+            //MeasureAverageCalc("(Per) Data-Oriented approach", sthDOD);
+            DOD("(Kimon) Data-Oriented approach", noOfTrades);
 
             Console.ReadKey();
         }
@@ -42,19 +41,21 @@ namespace StocksOODvsDOD
             Console.WriteLine();
         }
 
-
-
-
-        #region Real DOD
-
-        private static void DOD(int noOfTrades)
+        private static void DOD(string header, int noOfTrades)
         {
             StockTradeData stockTradeData = new StockTradeData();
             StockFunctions F = new StockFunctions();
-            F.StockTradeInit(noOfTrades, stockTradeData);
-           
-        }
 
-        #endregion
+            stockTradeData = F.StockTradeInit(noOfTrades);
+            F.GenerateTrades(noOfTrades, stockTradeData);
+
+            watch.Restart();
+
+            F.CalcAverages(noOfTrades, stockTradeData);
+
+            long mSecs = watch.ElapsedMilliseconds;
+
+            Console.WriteLine($"{header} took {mSecs} msecs.");
+        }
     }
 }
